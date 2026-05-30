@@ -1,5 +1,17 @@
 Here are the answers to your command-line and Git questions.
 
+## Quick Reference
+
+| #   | Question                                                |
+| --- | ------------------------------------------------------- |
+| 1   | How to use a particular SSH key in terminal for GitHub?  |
+| 2   | What is `-iE` used for in `grep`?                       |
+| 3   | How to use `find` and the `-R` flag?                    |
+| 4   | What does `git show <commit-hash> --stat` do?           |
+| 5   | How to know who made a particular commit?               |
+
+---
+
 ### Question 1: How to use a particular SSH key in terminal for GitHub?
 
 To use a specific SSH key for GitHub, you need to start the SSH agent and then add your key to it.
