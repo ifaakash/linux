@@ -1,5 +1,29 @@
 Here are the answers to your command-line and Git questions.
 
+### Question 1: How to use a particular SSH key in terminal for GitHub?
+
+To use a specific SSH key for GitHub, you need to start the SSH agent and then add your key to it.
+
+**Step 1: Start the SSH agent**
+
+```bash
+eval "$(ssh-agent -s)"
+```
+
+This starts an SSH agent in the background and outputs a process ID (e.g., `Agent pid 12345`).
+
+**Step 2: Add your SSH key to the agent**
+
+```bash
+ssh-add <path-to-key>
+```
+
+For example: `ssh-add ~/.ssh/id_ed25519`
+
+This will prompt you for the **passphrase** you set when creating the key. Once entered, the key is loaded into the agent and will be used for subsequent Git/SSH operations with GitHub.
+
+---
+
 ### Question 2: What is `-iE` used for in `grep`?
 
 The `-iE` flag is actually a combination of two separate flags squished together (`-i` and `-E`). When combined, they allow you to do a **case-insensitive search using extended regular expressions**.
