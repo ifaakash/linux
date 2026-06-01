@@ -2,6 +2,15 @@
 
 A concept guide. Layman terms, focused on **how the pieces fit together** and **why each one exists**, not on Terraform syntax.
 
+## Notes in this topic
+
+| File | What it covers |
+| --- | --- |
+| (this README) | End-to-end architecture: CloudWatch → Firehose → S3 → SQS → Elastic/Kibana. ECS via Fluent Bit (FireLens). Costs, IAM, decision trade-offs. |
+| [cloudwatch-log-group-vs-stream-vs-event.md](./cloudwatch-log-group-vs-stream-vs-event.md) | The CloudWatch Logs hierarchy — what a log group, stream, and event each are. Why both layers exist, how it maps to other AWS services, and why subscription filters attach at the group level. |
+| [subscription-filters-and-bucket-design.md](./subscription-filters-and-bucket-design.md) | What a CloudWatch Logs subscription filter is, how it works, what destinations are allowed, and the design decision of one centralised S3 bucket (with prefixes) vs. a bucket per service. |
+| [what-lands-in-s3-from-cloudwatch.md](./what-lands-in-s3-from-cloudwatch.md) | Concrete end-to-end trace of one log line — from app stdout through CloudWatch, Firehose, into the final gzipped JSON envelope in S3. What the file actually looks like and why. |
+
 ---
 
 ## The Big Picture

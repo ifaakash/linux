@@ -15,6 +15,7 @@ A personal reference of concepts, system architectures, and command-line know-ho
 | --- | --- | --- |
 | 1 | [Linux and Git Basics](./Linux%20and%20Git%20Basics/) | SSH keys for GitHub, `grep -iE`, `find` recursion, `git show --stat`, finding commit authors. |
 | 2 | [AWS Centralised Logging](./AWS%20Centralised%20Logging/) | CloudWatch → Firehose → S3 → SQS → Elastic/Kibana pipeline. ECS via Fluent Bit (FireLens) sidecar. Costs, IAM, when to use which architecture. |
+| 3 | [AWS CodeCommit](./AWS%20CodeCommit/) | Mirroring GitHub repos into CodeCommit so seat-less engineers get IAM-based read access. Sync models, credentials, IAM, trade-offs. |
 
 ## Adding a new topic
 
