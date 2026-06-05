@@ -820,6 +820,67 @@ exit
 
 ---
 
+### 4.6 Authentication to Azure — The Full Picture (Interview Must-Know)
+
+**What**: There are multiple ways applications and services authenticate to Azure. Understanding when to use which is a common interview question.
+
+**How humans authenticate**:
+- User account → username + password + MFA → through Entra ID
+
+**How applications/services authenticate — two options**:
+
+#### Option 1: App Registration + Service Principal
+
+Used when an **external service** (not running in Azure) needs Azure access.
+
+```
+App Registration (the "blueprint" — created in Entra ID)
+  └── Service Principal (the "runtime identity" — auto-created)
+       └── Credentials: Client ID + Client Secret (or Certificate)
+       └── Permissions: RBAC roles on specific resources
+```
+
+**App Registration** = Registering your app in Entra ID. Creates:
+- **Application (Client) ID** — unique identifier (like a username)
+- **Client Secret** or **Certificate** — the credential (like a password, has expiry)
+- **Tenant ID** — which Entra ID tenant it belongs to
+
+**Service Principal** = The identity object that gets RBAC roles. Auto-created with App Registration. Think: App Registration = the ID card, Service Principal = the person holding it.
+
+**The three values needed for Service Principal auth**:
+```
+Tenant ID     → Which Entra ID directory
+Client ID     → Which application (from App Registration)
+Client Secret → The password (or certificate)
+```
+
+#### Option 2: Managed Identity (covered in 4.1)
+
+Used when an **Azure resource** needs to access another Azure resource. No credentials at all.
+
+#### When to use which:
+
+| Scenario | Use | Why |
+|----------|-----|-----|
+| Azure VM → Key Vault | **Managed Identity** | No credentials to manage |
+| Azure VM → Storage | **Managed Identity** | No credentials to manage |
+| Power Automate → ADF pipeline | **App Registration + Service Principal** | External service, can't use Managed Identity |
+| GitHub Actions → Azure deployment | **App Registration + Service Principal** (or OIDC federation) | External CI/CD |
+| On-prem server → Azure resources | **App Registration + Service Principal** | Not an Azure resource |
+| Third-party SaaS → Azure API | **App Registration + Service Principal** | External service |
+
+**Real-world example — Power Automate triggering ADF pipeline**:
+1. Created App Registration in Entra ID → got Client ID + Tenant ID
+2. Generated a Client Secret (set expiry to 6 months)
+3. Assigned the Service Principal "Data Factory Contributor" role on the ADF resource
+4. In Power Automate, configured the Azure connection using Client ID + Secret + Tenant ID
+5. Power Automate authenticates via OAuth, calls ADF REST API to trigger the pipeline
+
+**Interview-ready answer**:
+> "For Azure-to-Azure communication, I always use Managed Identity — zero credentials, no rotation headaches. For external services like Power Automate or GitHub Actions connecting to Azure, I use App Registration with a Service Principal. I create the registration in Entra ID, generate a client secret with a defined expiry, and assign the minimum RBAC role needed on the target resource. I've done this to integrate Power Automate with Azure Data Factory for triggering ETL pipelines."
+
+---
+
 ## PHASE 5: Monitoring — Log Analytics, Alerts, Action Groups, KQL
 
 ### What we're doing
