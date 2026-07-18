@@ -23,3 +23,9 @@ A personal reference of concepts, system architectures, and command-line know-ho
 2. Inside that folder, write a `README.md` explaining the concept in layman terms — focus on **how things work** and **system architecture**, not implementation details.
 3. Add a row to the table above with a one-line summary.
 4. Commit.
+
+
+## Moving an apt resource package to enabled list
+```
+sudo mv /etc/apt/sources.list.d/tailscale.list.disabled /etc/apt/sources.list.d/tailscale.list
+```
